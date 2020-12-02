@@ -1,0 +1,394 @@
+#This is an interview that will help a tenant draft a notice to repair to their landlord. This was created based off of the Housing code Checklist provided by Mass Legal Help
+##This interview code was created by Michael Cronin from Suffolk Univiersity Law School 
+---
+include:
+  - docassemble.MAVirtualCourt:basic-questions.yml
+---
+#mandatory: True
+#code: |
+#  interview_metadata # make sure we initialize the object
+#  if not defined("interview_metadata['notice_to_repair']"):
+#    interview_metadata.initializeObject('notice_to_repair')
+#  interview_metadata['notice_to_repair'].update({
+#    'attachment block variable': 'repair_notice',
+#  })
+---
+##Mandatory list to establish order of windows displayed
+mandatory: True
+code: |
+  intro_screen
+  users[0].name.first
+  users[0].address.address
+  users.there_is_another = False
+  landlord_name 
+  inspection_yesno
+  if inspection_yesno:
+    inspection_report
+  else:
+    future_inspection
+  twentyfourhour_fixes
+  fiveday_fixes
+  kitchen_issues
+  bathroom_issues
+  water_issues
+  heat_issues
+  ventilation_light_issues
+  electric_gas_issues
+  safety_issues
+  structural_issues
+  space_issues
+  general_issues
+  rodents_issues
+  garbage_issues
+  lead_issues
+  next_steps
+  download
+---
+id: intro screen
+question: |
+  Notice to Repair
+subquestion: |
+  This interview is to help you (the tenant) determine if there are any issues in your residence which the landlord is required by law to repair. 
+  
+  This interview will take you through a new set of issues on each screen which correlate to a certain section of the Massachusetts Sanitary Code. **Click all issues that apply to your housing situation or click "None Of The Above" on each screen**
+  
+  At the end of the interview you will be given a document that you can email directly to your landlord or; download and send as an attachment or; print and hand deliver.
+  
+  **It is strongly advised that you save a copy for your records.**
+continue button field: intro_screen
+---
+id: landlord info
+question: |
+  What is the name of your landlord?
+fields:
+  - Landlords full name: landlord_name
+---
+id: inspection yes/no
+question: | 
+  Have you had a Massachusetts Board of Health official come by to inspect the damage and complete an official report?
+fields: 
+  - no label: inspection_yesno
+    datatype: yesnoradio
+  - What is the date of the future inspection?: inspection_date
+    datatype: date
+    show if: inspection_yesno
+---
+id: upload screen
+question: |
+  Upload the official report on this screen
+fields: 
+  - Upload your answer in a PDF/Photo: inspection_report
+    datatype: file
+---
+id: future inspection
+question: |
+  Do you have a future inspection with a Board of Health official scheduled?
+subquestion: |
+  If you have not had a Board of Health official inspect the damage and create a report we suggest that you do. It is not neccessary to complete this interview but it will make your case stronger if you have to go to court.
+  
+  **Check with your town or city's local government on how to schedule an inspection**
+fields: 
+  - no label: future_inspection
+    datatype: yesnoradio
+  - What is the date of the future inspection?: future_inspection_date
+    datatype: date
+    show if: future_inspection
+---
+id: 24 hour fixes
+question: |
+  The following are all repairs that the landlord must make in a 24 hour period
+subquestion: |
+  Click all that apply
+fields: 
+  - no label: twentyfourhour_fixes
+    datatype: checkboxes
+    choices:
+      - Not enough heat: -Not enough heat (410.201)
+      - Improper venting or use of space heater or water heater: -Improper venting or use of space heater or water heater. (410.200B,2020)
+      - No electricity or gas: -No electricity or gas. (410.354)
+      - No (or inadequate) electrical outlets or lighting in common areas: -No or inadequate electrical outlets or lighting in common areas (410.250(B),251(A),253,254)
+      - Shut-off and/or failure to restore electricity, gas or water: -Shut-off and/or failure to restore electricity, gas or water. (410.750(C),410.354)
+      - No safe water supply: -No safe water supply (410.180)
+      - No working toilet or sewage disposal system: -No working toilet or sewage disposal system. (410.150(A)(1),300) 
+      - Inadequate exits, including the obstruction of any exit, passageway, or common area through which you exit in an emergency: -Inadequate exits, including the obstruction of any exit, passageway, or common area through which you exit in an emergency. (410.450-452)
+      - No or inadequate locks for entry doors for either the apartment or building: -No or inadequate locks for entry doors for either the apartment or building (410.480(D))
+      - Accumulation of garbage or filth that may provide food or shelter for rodents, insects,or other pests that may contribute to accidents or disease: -Accumulation of garbage or filth that may provide food or shelter for rodents, insects,or other pests that may contribute to accidents or disease. (410.600,601,602)
+      - Lead paint that a child under age 6 could reach: -Lead paint that a child under age 6 could reach (105 C.M.R. 460, G.L. c. 111, §§190-199)
+      - Roof, foundation, or other structural defects that may expose you to fire, burns, shock, accident or other dangers: -Roof, foundation, or other structural defects that may expose you to fire, burns, shock, accident or other dangers. (410.500)
+      - Improperly installed or maintained electrical, plumbing, or heating appliances or equiptment that expose the occupant to fire, burns, shock, accident or other dangers: -Improperly installed or maintained electrical, plumbing, or heating appliances or equiptment that expose the occupant to fire, burns, shock, accident or other dangers. (410.351)
+      - No or not enough hot or cold water (including amount, pressure, and temperature) for 24 hours or longer: -No or not enough hot or cold water (including amount, pressure, and temperature) for 24 hours or longer. (410.180,190)
+      - No smoke detector or carbon monoxide alarm in good working order: -No smoke detector or carbon monoxide alarm in good working order. (410.482)
+      - Any defect in building materials that may lead to release of asbestos dust: -Any defect in building materials that may lead to release of asbestos dust. (410.353)
+      - Any other violation of the Sanitary Code the inspector has found to be dangerous to health and safety (only if there is an inspection report): -Any other violation of the Sanitary Code the inspector has found to be dangerous to health and safety. (reference inspection report)(410.750(P))
+---
+id: 5 day fixes
+question: |
+  The following are all repairs that the landlord must make in a 5 day period
+subquestion: |
+  Click all that apply
+fields: 
+  - no label: fiveday_fixes
+    datatype: checkboxes
+    choices:
+      - Kitchen sink is too small, or sink, stove, or oven is not in good working condition.:  -Kitchen sink is too small, or sink, stove, or oven is not in good working condition (410.100)
+      - Sink, tub or shower in the bathroom not in good working condition: -Sink, tub or shower in the bathroom not in good working condition. (410.150(A)(2) and (3))
+      - No or unsafe handrails or protective railings on porches, roofs, stairways, or other similar places: -No or unsafe handrails or protective railings on porches, roofs, stairways, or other similar places. (410.750(O)(3))
+      - A defect in electrical, plumbing, or heating system that violates "generally accepted standards" but does not create an immediate hazard: -A defect in electrical, plumbing, or heating system that violates "generally accepted standards" but does not create an immediate hazard. (410.750(O)(3)) 
+      - Cockroach, insect, or rodent infestation in a building with 2 or more units: -Cockroach, insect, or rodent infestation in a building with 2 or more units. (410.550)
+---
+id: kitchen issues list
+question: |
+  Kitchen Issues
+subquestion: |
+  Click all that apply
+fields: 
+  - no label: kitchen_issues
+    datatype: checkboxes
+    choices:
+      - Sink must be large enough to wash dishes, get hot and cold water, and have proper drainage.: -Sink must be large enough to wash dishes, get hot and cold water, and have proper drainage. (410.100(A)(1), 410.350(A))
+      - Landlord must provide a stove and oven in good working condition (unless a written agreement states that this is the responsibility of the tenant): -Landlord must provide a stove and oven in good working condition (unless a written agreement states that this is the responsibility of the tenant). (410.100(A)(2))
+      - All sinks, landlord-installed refrigerators and stoves, and gas- and oil-burning equipment must be in good working condition: -All sinks, landlord-installed refrigerators and stoves, and gas- and oil-burning equipment must be in good working condition. (410.351)
+      - At least one working light fixture and two wall outlets must be provided: -At least one working light fixture and two wall outlets must be provided. (410.251)
+      - Floors must be smooth, non-corrosive, and waterproof. Carpets on floors must have a nonabsorbent and water-repellent backing. Wooden floors must have a water resistant finish and no cracks: -Floors must be smooth, non-corrosive, and waterproof. Carpets on floors must have a nonabsorbent and water-repellent backing. Wooden floors must have a water resistant finish and no cracks. (410.504)
+      - Must have space and proper electrical outlet to install a refrigerator: -Must have space and proper electrical outlet to install a refrigerator. (410.100(A)(3))
+---
+id: bathroom issues list
+question: |
+  Bathroom Issues
+subquestion: |
+  Click all that apply
+fields: 
+  - no label: bathroom_issues
+    datatype: checkboxes
+    choices:
+      - Landlord must provide one toilet, free from defects in a room not used for living, sleeping, cooking, or eating.: -Landlord must provide one toilet, free from defects in a room not used for living, sleeping, cooking, or eating. (410.150(A)(1))
+      - Landlord must provide one sink, free from defects: -Landlord must provide one sink, free from defects.(410.510(A)(2))
+      - Landlord must provide one shower or bathtub, free from defects in a room not used for living, sleeping, cooking, or eating: -Landlord must provide one shower or bathtub, free from defects in a room notused for living, sleeping, cooking, or eating. (410.510(A)(3))
+      - Landlord must provide one electric light fixture, in good repair: -Landlord must provide one electric light fixture, in good repair. (410.252)
+      - Landlord must provide adequate ventilation in the Bathroom: -Landlord must provide adequate ventilation in the Bathroom. (410.280)
+      - The floor must be smooth, nonabsorbent, and have a waterproof covering: -The floor must be smooth, nonabsorbent, and have a waterproof covering.(410.504(A))
+      - Walls must be nonabsorbent, waterproof, and smooth material up to 4 feet. Walls above bathtubs with showers or shower stalls must have nonabsorbent, waterproof covering up to at least 6 feet.: -Walls must be nonabsorbent, waterproof, and smooth material up to 4 feet. Walls above bathtubs with showers or shower stalls must have nonabsorbent, waterproof covering up to at least 6 feet.(410.504(B) and (C))
+      - Each room that contains a toilet, bathtub, or shower must have a closable door: -Each room that contains a toilet, bathtub, or shower must have a closable door.(410.150(A)(4))
+---
+id: water issues list
+question: |
+  Water Issues
+subquestion: |
+  Click all that apply
+fields: 
+  - no label: water_issues
+    datatype: checkboxes
+    choices:
+      - Landlord must provide enough water, with adequate pressure, to meet your ordinary needs: -Landlord must provide enough water, with adequate pressure, to meet your ordinary needs. (410.180)
+      - Landlord must provide enough hot water at a temperature between 110 and 130 degrees Fahrenheit, with enough pressure, for your ordinary use. If you have a written rental agreement that says you must provide hot water, then your landlord does not have to provide it: -Landlord must provide enough hot water at a temperature between 110 and 130 degrees Fahrenheit, with enough pressure, for your ordinary use. If you have a written rental agreement that says you must provide hot water, then your landlord does not have to provide it. (410.190)
+      - Landlord must provide a water heater that vents to a chimney or vent that leads outdoors. If the heater is electric, it does not need a vent. Old-fashioned, open-flame water heaters are illegal: -Landlord must provide a water heater that vents to a chimney or vent that leads outdoors. If the heater is electric, it does not need a vent. Old-fashioned, open-flame water heaters are illegal.(410.202)
+      - Landlord must provide a toilet, sink, kitchen sink, and shower or bathtub must be connected correctly to hot and cold water lines. They must also be connected correctly to a sanitary drain line: -Landlord must provide a toilet, sink, kitchen sink, and shower or bathtub must be connected correctly to hot and cold water lines. They must also be connected correctly to a sanitary drain line. (410.350)
+      - The landlord must provide and pay for water. But the landlord may bill a tenant for water and sewer only if the tenant moved into the apartment on or after March 16, 2005 and other stiuplations apply (See G. L. c. 186, §14; G.L. c. 186, §22; 410.180, 410.354(D) for more information): -The landlord must provide and pay for water. But the landlord may bill a tenant for water and sewer only if the tenant moved into the apartment on or after March 16, 2005 and other stiuplations apply (See G. L. c. 186, §14; G.L. c. 186, §22; 410.180, 410.354(D) for more information)
+      - A landlord must also allow you access to any water submeters that affect your unit so that, if you need to, you can have the accuracy of the submeter checked: -A landlord must also allow access to any water submeters that affect the unit so that, if needed, the accuracy of the submeter can be checked. (410.354(E))
+---
+id: heat issues list
+question: |
+  Heat Issues
+subquestion: |
+  Click all that apply
+fields: 
+  - no label: heat_issues
+    datatype: checkboxes
+    choices:
+      - From September 16 to June 14, the landlord must provide equipment and appliances to heat every “habitable room” and bathrooms to at least 68 degrees Fahrenheit between 7 a.m. and 11 p.m.: -From September 16 to June 14, the landlord must provide equipment and appliances to heat every “habitable room” and bathrooms to at least 68 degrees Fahrenheit between 7 a.m. and 11 p.m. (410.200-201)
+      - From September 16 to June 14, the landlord must provide equipment and appliances to heat every “habitable room” and bathrooms to at least 64 degrees Fahrenheit between 11 p.m. and 7 a.m.: -From September 16 to June 14, the landlord must provide equipment and appliances to heat every “habitable room” and bathrooms to at least 64 degrees Fahrenheit between 11 p.m. and 7 a.m. (410.200-201)
+      - The landlord must provide and maintain heating equipment in good working order: -The landlord must provide and maintain heating equipment in good working order. (410.351)
+      - Space heaters must vent to a chimney or a vent that leads outdoors. If the heater is electric, it does not need a vent: -Space heaters must vent to a chimney or a vent that leads outdoors. If the heater is electric, it does not need a vent.(410.202)
+      - The landlord must provide and pay for heat unless you signed a written agreement that says you must pay for heat: -The landlord must provide and pay for heat unless you signed a written agreement that says you must pay for heat. (410.201)
+      - The temperature must not be more than 78 degrees Fahrenheit at any time during the heating season: -The temperature must not be more than 78 degrees Fahrenheit at any time during the heating season. (410.201)
+---
+id: ventilation and light issues list
+question: |
+  Ventilation and Light Issues
+subquestion: |
+  Click all that apply
+fields: 
+  - no label: ventilation_light_issues
+    datatype: checkboxes
+    choices:
+      - Every room must have windows, skylights, doors, or transoms in the outside wall or roof that open easily to at least 4% of the floor area of that room; or adequate mechanical ventilation systems: -Every room must have windows, skylights, doors, or transoms in the outside wall or roof that open easily to at least 4% of the floor area of that room; or adequate mechanical ventilation systems.(410.280)
+      - Each room must have transparent or translucent glass that admits light from the outdoors. The glass must be equal in area to at least 8% of the floor area of that room. This does not apply to a bathroom or a kitchen smaller than 70 square feet: -Each room must have transparent or translucent glass that admits light from the outdoors. The glass must be equal in area to at least 8% of the floor area of that room. This does not apply to a bathroom or a kitchen smaller than 70 square feet.(410.250(A), 410.251, 410.257)
+      - Buildings with 10 or more units must have an emergency lighting system in halls and at exits: -Buildings with 10 or more units must have an emergency lighting system in halls and at exits.(410.483)
+---
+id: electricity wiring and gas issues list
+question: |
+  Electricity, Wiring and Gas Issues
+subquestion: |
+  Click all that apply
+fields: 
+  - no label: electric_gas_issues
+    datatype: checkboxes
+    choices:
+      - The landlord must provide and pay for electricity and gas if your apartment is not individually metered or you do not have a written rental agreement that says you must pay for electric and gas: -The landlord must provide and pay for electricity and gas if your apartment is not individually metered or you do not have a written rental agreement that says you must pay for electric and gas.(410.354(A))
+      - Electrical service must provide enough amperage to meet your reasonable needs: -Electrical service must provide enough amperage to meet your reasonable needs.(410.255)
+      - In every room other than the kitchen and bathroom, your landlord must provide 2 separate electrical wall outlets, OR 1 electric light fixture and 1 wall outlet: -In every room other than the kitchen and bathroom, your landlord must provide 2 separate electrical wall outlets, OR 1 electric light fixture and 1 wall outlet.(410.250(B))
+      - Electrical light fixtures and switches which allow safe and reasonable use of the laundry room: -Electrical light fixtures and switches which allow safe and reasonable use of the laundry room.(410.253(A))
+      - Electrical light fixtures and switches which allow safe and reasonable use of the pantry: -Electrical light fixtures and switches which allow safe and reasonable use of the pantry.(410.253(A))
+      - Electrical light fixtures and switches which allow safe and reasonable use of the hallways, stairways, foyer, or community corridor: -Electrical light fixtures and switches which allow safe and reasonable use of the hallways, stairways, foyer, or community corridor.(410.253(A))
+      - Electrical light fixtures and switches which allow safe and reasonable use of the closer or storage spaces: -Electrical light fixtures and switches which allow safe and reasonable use of the closet or storage spaces.(410.253(A))
+      - Electrical light fixtures and switches which allow safe and reasonable use of the cellar: -Electrical light fixtures and switches which allow safe and reasonable use of the cellar.(410.253(A))
+      - Electrical light fixtures and switches which allow safe and reasonable use of the porch: -Electrical light fixtures and switches which allow safe and reasonable use of the porch.(410.253(A))
+      - Electrical light fixtures and switches which allow safe and reasonable use of the outside stairways and passageways: -Electrical light fixtures and switches which allow safe and reasonable use of the outside stairways and passageways.(410.253(A))
+      - Wiring must not pass under rugs or other floor coverings, or through doorways: -Wiring must not pass under rugs or other floor coverings, or through doorways.(410.256)
+      - Temporary wiring may not be used. But you can use extension cords for portable appliances or fixtures: -Temporary wiring may not be used. But you can use extension cords for portable appliances or fixtures.(410.256)
+      - Adequate lighting, 24 hours a day, in the interior passageways: -Adequate lighting, 24 hours a day, in the interior passageways. (410.254(A))
+      - Adequate lighting, 24 hours a day, in the hallways: -Adequate lighting, 24 hours a day, in the hallways. (410.254(A))
+      - Adequate lighting, 24 hours a day, in the stairways: -Adequate lighting, 24 hours a day, in the stairways. (410.254(A))
+      - In buildings with 3 units or fewer, the light fixtures in common hallways, stairways, and other common passages may be wired to the service for the unit next to the fixture. The landlord must pay for electricity to the fixture if you do not have a written agreement that says you pay for it. The landlord must also tell other occupants in the building about the agreement.: -In buildings with 3 units or fewer, the light fixtures in common hallways, stairways, and other common passages may be wired to the service for the unit next to the fixture. The landlord must pay for electricity to the fixture if you do not have a written agreement that says you pay for it. The landlord must also tell other occupants in the building about the agreement.(410.254(B))
+      - Buildings with 10 or more units must have back-up emergency lighting independent of the conventional lighting: -Buildings with 10 or more units must have back-up emergency lighting independent of the conventional lighting.(G.L. c. 143, §21D, 410.483)
+---
+id: safety issues list
+question: |
+  Safety Issues
+subquestion: |
+  Click all that apply
+fields: 
+  - no label: safety_issues
+    datatype: checkboxes
+    choices:
+      - There must be as many exits as necessary for “safe passage of all people” as defined by the state Building Code: -There must be as many exits as necessary for “safe passage of all people” as defined by the state Building Code.(410.450, 780 C.M.R.10.00)
+      - In a property with more than one unit, the landlord must keep all shared exits (not exits solely in your unit) free from obstruction: -In a property with more than one unit, the landlord must keep all shared exits free from obstruction.(410.451)
+      - The landlord must keep all exits safe, operable, and free of ice and snow. (Unless there is a written agreement written otherwise). This includes exterior stairways and fire escapes: -The landlord must keep all exits safe, operable, and free of ice and snow. This includes exterior stairways and fire escapes.(410.452)
+      - The landlord must install and maintain fire extinguishers as required by the local fire chief: -The landlord must install and maintain fire extinguishers as required by the local fire chief. (527 C.M.R. §10.02)
+      - The landlord must make sure that all exterior windows that open and all entry doors have working locks: -The landlord must make sure that all exterior windows that open and all entry doors have working locks.(410.480(D) and (E))
+      - (IN A BUILDING WITH MORE THAN THREE APARTMENTS) A main front door that closes and locks automatically and every exterior door must have an operating lock: -(IN A BUILDING WITH MORE THAN THREE APARTMENTS) A main front door that closes and locks automatically and every exterior door must have an operating lock.(410.480(C))
+      - (IN A BUILDING WITH MORE THAN THREE APARTMENTS) Buildings over 70 feet high must have an automatic sprinkler system in accordance with the state Building Code. If you have questions, ask the Housing Inspector: -(IN A BUILDING WITH MORE THAN THREE APARTMENTS) Buildings over 70 feet high must have an automatic sprinkler system in accordance with the state Building Code. If you have questions, ask the Housing Inspector. (G.L. C. 148, §21D)
+      - (IN A BUILDING WITH 10 OR MORE APARTMENTS) The building must have lighted signs that show both a primary and a secondary means of exit The signs must use symbols so that people do not need to speak English to find the exits: -(IN A BUILDING WITH 10 OR MORE APARTMENTS) The building  must have lighted signs that show both a primary and a secondary means of exit The signs must use symbols so that people do not need to speak English to find the exits.(G.L. C. 143, §21D)
+      - (IN A BUILDING WITH MORE THAN THREE APARTMENTS) The landlord must install and keep smoke detectors and carbon monoxide alarms in good working order in most buildings. Ask the Fire Marshall if you have questions.: -(IN A BUILDING WITH MORE THAN THREE APARTMENTS) The landlord must install and keep smoke detectors and carbon monoxide alarms in good working order in most buildings. (410.482; 527 C.M.R. 31.00 and 32.00) 
+---
+id: structural maintenance issues list
+question: |
+  Structural Maintenance Issues
+subquestion: |
+  Click all that apply
+fields: 
+  - no label: structural_issues
+    datatype: checkboxes
+    choices:
+      - Holes, cracks, loose plaster, chronic dampness and other defects; or a lack of weathertight, insect-proofing and rodent-proofing in the Foundation: -Holes, cracks, loose plaster, chronic dampness and other defects; or a lack of weathertight, insect-proofing and rodent-proofing in the Foundation.(410.500)
+      - Holes, cracks, loose plaster, chronic dampness and other defects; or a lack of weathertight, insect-proofing and rodent-proofing in the Floors: -Holes, cracks, loose plaster, chronic dampness and other defects; or a lack of weathertight, insect-proofing and rodent-proofing in the Floors.(410.500)
+      - Holes, cracks, loose plaster, chronic dampness and other defects; or a lack of weathertight, insect-proofing and rodent-proofing in the Walls: -Holes, cracks, loose plaster, chronic dampness and other defects; or a lack of weathertight, insect-proofing and rodent-proofing in the Walls.(410.500)
+      - Holes, cracks, loose plaster, chronic dampness and other defects; or a lack of weathertight, insect-proofing and rodent-proofing in the Ceilings: -Holes, cracks, loose plaster, chronic dampness and other defects; or a lack of weathertight, insect-proofing and rodent-proofing in the Ceilings.(410.500)
+      - Holes, cracks, loose plaster, chronic dampness and other defects; or a lack of weathertight, insect-proofing and rodent-proofing in the Roof: -Holes, cracks, loose plaster, chronic dampness and other defects; or a lack of weathertight, insect-proofing and rodent-proofing in the Roof.(410.500)
+      - Holes, cracks, loose plaster, chronic dampness and other defects; or a lack of weathertight, insect-proofing and rodent-proofing in the Chimneys and other structural elements: -Holes, cracks, loose plaster, chronic dampness and other defects; or a lack of weathertight, insect-proofing and rodent-proofing in the Chimineys and other structural elements.(410.500)
+      - Doors and windows must have good weather stripping or storm window or storm door. They must also open fully and easily. All glass panes must be unbroken and caulked correctly: -Doors and windows must have good weather stripping or storm window or storm door. They must also open fully and easily. All glass panes must be unbroken and caulked correctly.(410.500,501)
+      - Staircases must be stable with a safe handrail: -Staircases must be stable with a safe handrail.(410.500,503(A) and (B))
+      - Every porch, balcony or roof over 30 inches above the ground must have a wall or guardrail that is at least 3 feet high: -Every porch, balcony or roof over 30 inches above the ground must have a wall or guardrail that is at least 3 feet high.(410.503(C))
+---
+id: space issues list
+question: |
+  Space Issues
+subquestion: |
+  Click all that apply
+fields: 
+  - no label: space_issues
+    datatype: checkboxes
+    choices:
+      - Every dwelling unit must have at least 150 square feet of floor space for the first occupant and 100 square feet for each additional occupant. Add up all the floor space in “habitable rooms” to get the number of square feet in your unit (“Habitable room” means any room to be used for living, sleeping, cooking, or eating. Do not include your pantry, bathrooms, laundry room, halls, or storage spaces.): -Every dwelling unit must have at least 150 square feet of floor space for the first occupant and 100 square feet for each additional occupant. Add up all the floor space in “habitable rooms” to get the number of square feet in your unit. (“Habitable room” means any room to be used for living, sleeping, cooking, or eating. Do not include your pantry, bathrooms, laundry room, halls, or storage spaces.)(410.100(A))
+      - Every bedroom must have at least 70 square feet of floor space if only one person sleeps there. If more than one person is sleeping in the room, it must have 50 square feet of floor space for each person: -Every bedroom must have at least 70 square feet of floor space if only one person sleeps there. If more than one person is sleeping in the room, it must have 50 square feet of floor space for each person.(410.100(B))
+---
+id: general issues list
+question: |
+  General Maintenance Issues
+subquestion: |
+  Click all that apply
+fields: 
+  - no label: general_issues
+    datatype: checkboxes
+    choices:
+      - The landlord must keep common areas clean and sanitary: -The landlord must keep common areas clean and sanitary. (410.602(D))
+      - If the landlord or a manager does not live in the property, the landlord must post a sign with the name, address, and phone number of the landlord or their agent. The sign must be inside the building and at least 20 square inches.: -If the landlord or a manager does not live in the property, the landlord must post a sign with the name, address, and phone number of the landlord or their agent. The sign must be inside the building and at least 20 square inches.(410.481)
+      - A landlord may not turn off or interfere with a tenant’s water, hot water, heat, light, power, or gas. (The only time a landlord may shut off utilities temporarily, is to make necessary repairs. And the landlord must give you “reasonable notice.”): -A landlord may not turn off or interfere with a tenant’s water, hot water, heat, light, power, or gas. (The only time a landlord may shut off utilities temporarily, is to make necessary repairs. And the landlord must give you “reasonable notice.”)(410.620)
+      - All windows that open to the outside, on the first four floors, must have screens between April 1 and October 30: -All windows that open to the outside, on the first four floors, must have screens between April 1 and October 30. (410.551,553)
+      - All doors that open directly to the outside must have screens between April 1 and October 30: -All doors that open directly to the outside must have screens between April 1 and October 30.(410.552,553)
+      - The landlord must install correctly and keep free of leaks, blocks, and other defects the sinks, bathtubs, showers and toilets: -The landlord must install correctly and keep free of leaks, blocks, and other defects the sinks, bathtubs, showers and toilets.(410.351(A))
+      - The landlord must install correctly and keep free of leaks, blocks, and other defects the waterheating facilities, gas pipes, heating equipments and water pipes.: -The landlord must install correctly and keep free of leaks, blocks, and other defects the waterheating facilities, gas pipes, heating equipment, and water pipes.(410.351(A))
+      - The landlord must install correctly and keep free of leaks, blocks, and other defects the stoves and ovens: -The landlord must install correctly and keep free of leaks, blocks, and other defects the stoves and ovens.(410.351(A))
+      - The landlord must install correctly and keep free of leaks, blocks, and other defects the catch-basins, vents, drains, and other similar fixtures: -The landlord must install correctly and keep free of leaks, blocks, and other defects the cathc-basins, vents, drains, and other similar fixtures.(410.351(A))
+      - The landlord must install correctly and keep free of leaks, blocks, and other defects the connections to water, sewer, and gas lines, and the subsurface sewage disposal system, if any.: -The landlord must install correctly and keep free of leaks, blocks, and other defects the connections to water, sewer, and gas lines, and the subsurface sewage disposal system, if any.(410.351(A))
+      - The landlord must install correctly and keep free of leaks, blocks, and other defects all electrical fixtures, outlets and wiring: -The landlord must install correctly and keep free of leaks, blocks, and other defects all electrical fixtures, outlets and wiring.(410.351(A))
+      - The landlord must install correctly and keep free of leaks, blocks, and other defects all smoke detectors and carbon monoxide alarms: -The landlord must install correctly and keep free of leaks, blocks, and other defects all smoke detectors and carbon monoxide alarms.(410.351(A))
+      - The landlord must install correctly and keep free of leaks, blocks, and other defects all heating and ventilation equipment: -The landlord must install correctly and keep free of leaks, blocks, and other defects all heating and ventilation equipment.(410.351(A))
+      - The landlord-installed, and kept free of leaks, blocks and other defects, equipment, including dishwashers, washing machines, dryers, refrigerators, and garbage disposals: -The landlord-installed, and kept free of leaks, blocks and other defects, equipment, including dishwashers, washing machines, dryers, refrigerators, and garbage disposals. (410.351(B))
+---
+id: rodents and insects issues list
+question: |
+  Rodent and Insects Issues
+subquestion: |
+  Click all that apply
+fields: 
+  - no label: rodents_issues
+    datatype: checkboxes
+    choices:
+      - No rats, roaches, mice, bedbugs, or other insects are allowed in the apartment or building. The landlord must exterminate them when they are found in common areas or in any individual apartment in buildings with two or more units.: -No rats, roaches, mice, bedbugs, or other insects are allowed in the apartment or building. The landlord must exterminate them when they are found in common areas or in any individual apartment in buildings with two or more units.(410.550)
+---
+id: garbage issues list
+question: |
+  Garbage Issues
+subquestion: |
+  Click all that apply
+fields: 
+  - no label: garbage_issues
+    datatype: checkboxes
+    choices:
+      - (IN A BUILDING WITH MORE THAN THREE APARTMENTS) The landlord must provide enough watertight garbage cans. Cans must have tightly fitting covers. The landlord must put cans in places that are convenient to tenants and do not allow odors into your living space.: -(IN A BUILDING WITH MORE THAN THREE APARTMENTS) The landlord must provide enough watertight garbage cans. Cans must have tightly fitting covers. The landlord must put cans in places that are convenient to tenants and do not allow odors into your living space.(410.600(C))
+      - (IN A BUILDING WITH MORE THAN THREE APARTMENTS) The landlord is responsible for collecting and disposing of garbage: -(IN A BUILDING WITH MORE THAN THREE APARTMENTS) The landlord is responsible for collecting and disposing of garbage.(410.601)
+---
+id: bathroom issues list
+question: |
+  Lead Paint Issues
+subquestion: |
+  Click all that apply
+fields: 
+  - no label: lead_issues
+    datatype: checkboxes
+    choices:
+      - No lead paint may be used on any surface: -No lead paint may be used on any surface.(410.502)
+      - If you have a child under the age of 6, your landlord must remove or properly cover lead paint up to 5 feet from the floor. Repainting with a non-lead paint is not good enough. (It is illegal to refuse to rent or to evict a household because of lead paint.): -If you have a child under the age of 6, your landlord must remove or properly cover lead paint up to 5 feet from the floor. Repainting with a non-lead paint is not good enough. (It is illegal to refuse to rent or to evict a household because of lead paint.)(G.L. c. 111, §197)
+---
+id: next steps
+continue button field: next_steps
+question: |
+  Thank you for completing this interview.
+subquestion: |
+  On the next screen you will be able to either send the document directly to your landlord via email or download the document. 
+  
+  **Be sure to double check that your name, the address of the residence and your landlord's name is correct. If the information is incorrect you can select "Back" and make changes**
+---
+id: download
+event: download
+question: |
+  Your forms are ready to download
+subquestion: |
+  # FOLLOW THE STEPS BELOW BEFORE EXITING THIS INTERVIEW:
+  
+  1. Download a copy of this document and store it on your computer or print out a physical copy to keep in your records
+  2. Deliver a copy of this document to your landlord either by:
+    a. Entering the landlord's email on this screen so a copy can be sent directly to him;
+    b. Downloading a copy and sending the document as an attachment from your own email. 
+    c. Downloading and printing out a copy to mail or hand-deliver the document.
+  3. **Keep track of when the document was delivered to your landlord.** If a legal proceeding is to take place regarding these repairs it is important that you have proof of WHEN THE LANDLORD WAS PUT ON NOTICE OF THE HOUSING CODE ISSUES.
+  4. **Take picutres of the issues you claim in this letter.** It is also important that you have proof of the issues in case of legal proceedings. 
+  
+  Refer the document on "Getting Repairs Made" from Mass Legal Help if you have any questions on interactions with the landlord or starting a legal proceeding. 
+  
+  [Mass Legal Help document: "Chapter 8: Getting Repairs Made"](https://www.masslegalhelp.org/housing/lt1-chapter-8-getting-repairs-made.pdf)
+attachment:
+  - name: Notice To Repair
+    variable name: repair_notice
+    filename: notice_to_repair
+    docx template file: notice_to_repair_template.docx
+    valid formats:
+      - pdf
+      - docx
+---
+#code: |
+#  if inspection_yesno: 
+#    combined_motion = pdf_concatenate(repair_notice, inspection_report, filename="notice_to_repair_and_inspection.pdf")
+#  else:
+#    combined_motion = repair_notice
